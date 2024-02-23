@@ -1,17 +1,27 @@
-<div class="login-container-wrapper">
+<div class="login-container-wrapper" #containerWrapper>
   <div class="login-container">
     <div class="login-box">
       <h2>Let's Get Started</h2>
       <form action="#">
         <div class="input-box">
-          <input type="email" required />
-          <label>Email</label>
+          <input
+            #emailInput
+            type="email"
+            [(ngModel)]="loginObj.EmailId"
+            name="EmailId"
+            required
+            autofocus
+            placeholder="Enter your email" />
         </div>
         <div class="input-box">
-          <input type="password" required />
-          <label>Password</label>
+          <input
+            #passwordInput
+            type="password"
+            [(ngModel)]="loginObj.Password"
+            name="Password"
+            placeholder="Enter your password" />
         </div>
-        <button type="submit" class="btn">Login</button>
+        <button type="submit" class="btn" (click)="onLogin()">Login</button>
       </form>
     </div>
   </div>
