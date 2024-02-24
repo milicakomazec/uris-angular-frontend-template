@@ -10,40 +10,10 @@
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-.project-box {
-  margin-left: 60px;
+.project-info {
+  margin-left: 100px;
   color: $text-color-primary;
   font-size: 18px;
-}
-
-.header-nav-tabs ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0 50px 0 0;
-}
-
-.header-nav-tabs ul li {
-  display: inline-block;
-  color: $text-color-primary;
-  font-size: 18px;
-  margin-left: 15px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  position: relative;
-}
-
-.header-nav-tabs ul li:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  width: 2px;
-  height: 30px;
-  background-color: $action-color;
-  right: -10px;
-  top: 0px;
-}
-
-.header-nav-tabs ul li:hover {
-  background-color: rgba(132, 169, 140, 0.7);
 }
 
 .side-nav-icon i {
@@ -105,7 +75,7 @@
 }
 
 .logout-container {
-  margin-right: 20px;
+  margin-right: 30px;
   height: 18px;
   color: $text-color-primary;
   cursor: pointer;

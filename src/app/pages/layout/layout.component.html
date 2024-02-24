@@ -1,19 +1,10 @@
 <div class="nav-bar-container">
-  <div class="project-box">URIS frontend template</div>
-  <div class="header-nav-tabs">
-    <ul>
-      <li (click)="closeMenu()">Dashboard</li>
-      <li (click)="closeMenu()">Backlog</li>
-      <li (click)="closeMenu()">Board view</li>
-      <li (click)="closeMenu()">Profile</li>
-    </ul>
-  </div>
+  <div class="project-info">URIS frontend template</div>
   <div class="logout-container" (click)="onLogout()">
     <i class="bi bi-box-arrow-right"></i>
     Logout
   </div>
 </div>
-
 <div
   class="side-nav-icon"
   *ngIf="toggleSideNav"
@@ -29,17 +20,17 @@
   </div>
   <div class="side-nav" [ngClass]="{ 'hide-menu': toggleSideNav }">
     <ul>
-      <li (click)="closeMenu()">
+      <li (click)="closeMenu('dashboard')">
         <i class="bi bi-graph-up"></i>
         <span> Dashboard </span>
       </li>
-      <li (click)="closeMenu()">
+      <li (click)="closeMenu('backlog')">
         <i class="bi bi-table"></i> <span> Backlog </span>
       </li>
-      <li (click)="closeMenu()">
+      <li (click)="closeMenu('board')">
         <i class="bi bi-kanban"></i> <span> Board view </span>
       </li>
-      <li (click)="closeMenu()">
+      <li (click)="closeMenu('profile')">
         <i class="bi bi-person-square"></i> <span> User profile </span>
       </li>
     </ul>

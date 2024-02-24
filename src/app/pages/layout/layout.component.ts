@@ -22,8 +22,9 @@ export class LayoutComponent {
     this.toggleSideNav = !this.toggleSideNav;
   }
 
-  closeMenu() {
+  closeMenu(path: string) {
     this.toggleSideNav = false;
+    this.router.navigate([path]);
   }
 
   onLogout(): void {
