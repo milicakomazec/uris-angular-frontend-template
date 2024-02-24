@@ -1,0 +1,38 @@
+<div class="container">
+  <h2>Edit User Info</h2>
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="fullName">Full Name</label>
+      <input
+        type="text"
+        formControlName="fullName"
+        class="form-control"
+        id="fullName" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        formControlName="email"
+        class="form-control"
+        id="email" />
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input
+        type="text"
+        formControlName="phone"
+        class="form-control"
+        id="phone" />
+    </div>
+    <div class="form-group">
+      <label for="mobile">Mobile</label>
+      <input
+        type="text"
+        formControlName="mobile"
+        class="form-control"
+        id="mobile" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>

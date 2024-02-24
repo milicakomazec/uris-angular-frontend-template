@@ -11,7 +11,7 @@ interface LoginResponse {
   message: string;
   result: {
     token: string;
-    username: string;
+    userId: string;
   };
 }
 
@@ -22,7 +22,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   getToken(): string | null {
-    return localStorage.getItem('jwtToken');
+    return localStorage.getItem('userId');
   }
 
   isLoggedIn(): boolean {
@@ -30,8 +30,7 @@ export class AuthService {
   }
 
   logout() {
-    console.log('here logoout', localStorage.getItem('jwtToken'));
-    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('userId');
   }
 
   login(email: string, password: string): Observable<LoginResponse> {
@@ -40,7 +39,7 @@ export class AuthService {
       .pipe(
         tap(res => {
           if (res.result) {
-            localStorage.setItem('jwtToken', res.result.token);
+            localStorage.setItem('userId', res.result.userId);
           } else {
             alert('Failed');
           }

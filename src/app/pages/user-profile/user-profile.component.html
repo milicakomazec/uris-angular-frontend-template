@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="profile-card info-section align-self-stretch">
+        <div class="info-section-body">
+          <div class="edit-info">
+            <i class="bi bi-pencil-fill"></i>
+          </div>
+          <div class="d-flex flex-column align-items-center text-center">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar7.png"
+              alt="Admin"
+              class="rounded-circle"
+              width="150" />
+            <div class="mt-3">
+              <h4>{{ user?.fullName }}</h4>
+              <p>Full Stack Developer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="info-section">
+        <div class="info-section-body">
+          <div class="row">
+            <div class="col-sm-5 info-row">
+              <i class="bi bi-person-fill"></i>
+              <h6>Full Name</h6>
+            </div>
+            <div class="col-sm-7">{{ user?.fullName }}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-5 info-row">
+              <i class="bi bi-envelope-fill"></i>
+              <h6>Email</h6>
+            </div>
+            <div class="col-sm-7">{{ user?.email }}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-5 info-row">
+              <i class="bi bi-telephone-fill"></i>
+              <h6>Phone</h6>
+            </div>
+            <div class="col-sm-7">{{ user?.phone }}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-5 info-row">
+              <i class="bi bi-phone-fill"></i>
+              <h6 class="mb-0">Mobile</h6>
+            </div>
+            <div class="col-sm-7">{{ user?.mobile }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-links info-section">
+      <div class="row">
+        <div class="col-sm-5 info-row">
+          <i class="bi bi-globe2"></i>
+          <h6>website</h6>
+        </div>
+        <div class="col-sm-7">{{ user?.websiteUrl }}</div>
+      </div>
+
+      <hr />
+      <div class="row">
+        <div class="col-sm-5 info-row">
+          <i class="bi bi-github"></i>
+          <h6>github</h6>
+        </div>
+        <div class="col-sm-7">{{ user?.gitHubUrl }}</div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-sm-5 info-row">
+          <i class="bi bi-linkedin"></i>
+          <h6>linkedin</h6>
+        </div>
+        <div class="col-sm-7">{{ user?.linkedinUrl }}</div>
+      </div>
+    </div>
+
+    <div class="card-container">
+      <div class="card">
+        <div class="face face1 info-row">
+          <i class="bi bi-geo-fill"></i>
+          <div>Adress</div>
+        </div>
+        <div class="face face2">
+          <div class="col-sm-7">{{ user?.address }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

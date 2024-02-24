@@ -89,3 +89,13 @@
     font-size: 30px;
   }
 }
+
+.content-container {
+  height: 100vh;
+  margin-top: 30px;
+  margin-left: 20px;
+  transition: margin-left 0.3s ease;
+  &.shifted {
+    margin-left: 270px;
+  }
+}

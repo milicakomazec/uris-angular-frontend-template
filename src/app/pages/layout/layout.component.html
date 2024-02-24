@@ -28,3 +28,7 @@
     </ul>
   </div>
 </div>
+
+<div class="content-container" [ngClass]="{ shifted: !toggleSideNav }">
+  <router-outlet></router-outlet>
+</div>
