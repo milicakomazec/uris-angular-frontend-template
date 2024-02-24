@@ -1,6 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 interface LoginResponse {
@@ -15,20 +21,24 @@ interface LoginResponse {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  styleUrls: ['./login.component.scss'],
+  imports: [ReactiveFormsModule, CommonModule],
 })
 export class LoginComponent {
   @ViewChild('emailInput') emailInput!: ElementRef;
   @ViewChild('passwordInput') passwordInput!: ElementRef;
   @ViewChild('containerWrapper') containerWrapper!: ElementRef;
-  loginObj: Login;
+  loginForm: FormGroup; // Define FormGroup
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder
   ) {
-    this.loginObj = new Login();
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
 
   ngAfterViewInit() {
@@ -46,20 +56,24 @@ export class LoginComponent {
     this.toggleAnimationPause(true);
     event.stopPropagation();
   }
+
   onLogin() {
-    this.http
-      .post<LoginResponse>(
-        'https://app.microenv.com/backend/key/1b40b895e89f87f922b2b3/rest/api/login',
-        this.loginObj
-      )
-      .subscribe(res => {
-        if (res.result) {
-          alert('Login success');
-          this.router.navigateByUrl('/dashboard');
-        } else {
-          alert(res.message);
-        }
-      });
+    if (this.loginForm.valid) {
+      this.http
+        .post<LoginResponse>(
+          'https://app.microenv.com/backend/key/1b40b895e89f87f922b2b3/rest/api/login',
+          this.loginForm.value
+        )
+        .subscribe(res => {
+          if (res.result) {
+            this.router.navigateByUrl('/dashboard');
+          } else {
+            alert(res.message);
+          }
+        });
+    } else {
+      alert('Please enter valid credentials');
+    }
   }
 
   toggleAnimationPause(pause: boolean) {
@@ -70,6 +84,7 @@ export class LoginComponent {
       containerWrapper.classList.remove('pause-animation');
     }
   }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const clickedElement = event.target as HTMLElement;
@@ -79,14 +94,5 @@ export class LoginComponent {
     ) {
       this.toggleAnimationPause(false);
     }
-  }
-}
-
-export class Login {
-  EmailId: string;
-  Password: string;
-  constructor() {
-    this.EmailId = '';
-    this.Password = '';
   }
 }

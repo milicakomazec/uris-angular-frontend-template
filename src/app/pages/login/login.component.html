@@ -2,26 +2,51 @@
   <div class="login-container">
     <div class="login-box">
       <h2>Let's Get Started</h2>
-      <form action="#">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <div class="input-field">
           <input
             #emailInput
+            formControlName="email"
             type="email"
-            [(ngModel)]="loginObj.EmailId"
-            name="EmailId"
+            name="email"
             required
-            autofocus
             placeholder="Enter your email" />
+          <div
+            *ngIf="
+              loginForm.get('email')?.invalid &&
+              (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)
+            "
+            class="error-message">
+            <span *ngIf="loginForm.get('email')?.errors?.['required']"
+              >Email is required</span
+            >
+            <span *ngIf="loginForm.get('email')?.errors?.['email']"
+              >Please enter valid email</span
+            >
+          </div>
         </div>
         <div class="input-field">
           <input
             #passwordInput
+            formControlName="password"
             type="password"
-            [(ngModel)]="loginObj.Password"
-            name="Password"
+            name="password"
             placeholder="Enter your password" />
+          <div
+            *ngIf="
+              loginForm.get('password')?.invalid &&
+              (loginForm.get('password')?.dirty ||
+                loginForm.get('password')?.touched)
+            "
+            class="error-message">
+            <span *ngIf="loginForm.get('password')?.errors?.['required']"
+              >Password is required</span
+            >
+          </div>
         </div>
-        <button type="submit" class="btn" (click)="onLogin()">LOGIN</button>
+        <button type="submit" class="btn" [disabled]="loginForm.invalid">
+          LOGIN
+        </button>
       </form>
     </div>
   </div>
