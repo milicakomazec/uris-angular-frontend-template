@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import {
   FormBuilder,
@@ -8,15 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-
-interface LoginResponse {
-  status: number;
-  message: string;
-  result: {
-    token: string;
-    username: string;
-  };
-}
+import { AuthService } from '../../auth/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -29,9 +20,9 @@ export class LoginComponent {
   @ViewChild('emailInput') emailInput!: ElementRef;
   @ViewChild('passwordInput') passwordInput!: ElementRef;
   @ViewChild('containerWrapper') containerWrapper!: ElementRef;
-  loginForm: FormGroup; // Define FormGroup
+  loginForm: FormGroup;
   constructor(
-    private http: HttpClient,
+    private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder
   ) {
@@ -59,18 +50,14 @@ export class LoginComponent {
 
   onLogin() {
     if (this.loginForm.valid) {
-      this.http
-        .post<LoginResponse>(
-          'https://app.microenv.com/backend/key/1b40b895e89f87f922b2b3/rest/api/login',
-          this.loginForm.value
-        )
-        .subscribe(res => {
-          if (res.result) {
-            this.router.navigateByUrl('/dashboard');
-          } else {
-            alert(res.message);
-          }
-        });
+      const { email, password } = this.loginForm.value;
+      this.authService.login(email, password).subscribe(res => {
+        if (res.result) {
+          this.router.navigateByUrl('/dashboard');
+        } else {
+          alert(res.message);
+        }
+      });
     } else {
       alert('Please enter valid credentials');
     }
