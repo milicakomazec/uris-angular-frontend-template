@@ -1,15 +1,43 @@
-<body>
-  <nav>
-    <div class="logo">URIS</div>
-    <input type="checkbox" id="click" />
-    <label for="click" class="menu-btn">
-      <i class="fas fa-bars"></i>
-    </label>
+<div class="nav-bar-container">
+  <div class="project-box">URIS frontend template</div>
+  <div class="header-nav-tabs">
     <ul>
-      <li><a class="active" href="#">Dashboard</a></li>
-      <li><a href="#">Backlog</a></li>
-      <li><a href="#">Board view</a></li>
-      <li><a href="#">User profile</a></li>
+      <li (click)="closeMenu()">Dashboard</li>
+      <li (click)="closeMenu()">Backlog</li>
+      <li (click)="closeMenu()">Board view</li>
+      <li (click)="closeMenu()">Profile</li>
     </ul>
-  </nav>
-</body>
+  </div>
+</div>
+
+<div
+  class="side-nav-icon"
+  *ngIf="toggleSideNav"
+  (click)="toggleSideNavigation()">
+  <i class="bi bi-list"></i>
+</div>
+<div class="side-nav-container">
+  <div
+    class="nav-bar-icon"
+    *ngIf="!toggleSideNav"
+    (click)="toggleSideNavigation()">
+    <i class="bi bi-arrow-left"></i>
+  </div>
+  <div class="side-nav" [ngClass]="{ 'hide-menu': toggleSideNav }">
+    <ul>
+      <li (click)="closeMenu()">
+        <i class="bi bi-graph-up"></i>
+        <span> Dashboard </span>
+      </li>
+      <li (click)="closeMenu()">
+        <i class="bi bi-table"></i> <span> Backlog </span>
+      </li>
+      <li (click)="closeMenu()">
+        <i class="bi bi-kanban"></i> <span> Board view </span>
+      </li>
+      <li (click)="closeMenu()">
+        <i class="bi bi-person-square"></i> <span> User profile </span>
+      </li>
+    </ul>
+  </div>
+</div>

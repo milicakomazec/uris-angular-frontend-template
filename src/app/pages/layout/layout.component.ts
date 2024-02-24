@@ -1,12 +1,23 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-layout',
-  standalone: true,
-  imports: [],
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.scss'
+  standalone: true,
+  imports: [CommonModule],
+  styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent {
+  toggleSideNav: boolean = false;
 
+  constructor() {}
+
+  toggleSideNavigation() {
+    this.toggleSideNav = !this.toggleSideNav;
+  }
+
+  closeMenu() {
+    this.toggleSideNav = false;
+  }
 }

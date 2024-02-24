@@ -1,0 +1,104 @@
+.nav-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  background-image: url('/assets/headerBackground.jpg');
+  background-size: cover;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+  // border-bottom: 3px solid #84a98c;
+}
+
+.project-box {
+  margin-left: 60px;
+  color: #cad2c5;
+  font-size: 18px;
+}
+
+.header-nav-tabs ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 50px 0 0;
+}
+
+.header-nav-tabs ul li {
+  display: inline-block;
+  color: #cad2c5;
+  font-size: 18px;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+
+.header-nav-tabs ul li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 30px;
+  background-color: #84a98c;
+  right: -10px;
+  top: 0px;
+}
+
+.header-nav-tabs ul li:hover {
+  background-color: rgba(132, 169, 140, 0.7);
+}
+
+.side-nav-icon i {
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  top: 10px;
+  left: 20px;
+  font-size: 40px;
+  color: #84a98c;
+}
+
+.side-nav {
+  position: fixed;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  transition: left 0.4s ease;
+  background-image: url('/assets/sideNavBackground.jpg');
+  box-shadow: 8px 0px 20px rgba(0, 0, 0, 0.4);
+}
+
+.side-nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-nav ul li {
+  margin: 5px;
+  color: #cad2c5;
+  font-size: 18px;
+  padding: 15px;
+  border-bottom: 1px solid #84a98c;
+  cursor: pointer;
+}
+
+.side-nav ul li:hover {
+  background-color: rgba(132, 169, 140, 0.7);
+}
+
+.nav-bar-icon {
+  color: #84a98c;
+  font-size: 40px;
+  padding: 10px;
+  cursor: pointer;
+  position: fixed;
+  top: 80px;
+  left: 250px;
+}
+
+.hide-menu {
+  left: -270px;
+  box-shadow: 0;
+}
+
+.side-nav > ul > li > span {
+  margin-left: 10px;
+}
