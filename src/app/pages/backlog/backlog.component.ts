@@ -4,6 +4,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -21,7 +22,7 @@ import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-backlog',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule],
 
   templateUrl: './backlog.component.html',
   styleUrl: './backlog.component.scss',
@@ -29,6 +30,7 @@ import { Router, RouterModule } from '@angular/router';
 export class BacklogComponent implements OnInit {
   taskForm!: FormGroup;
   task: ITask[] = [];
+  filteredTasks: ITask[] = [];
   taskStatus = TaskStatus;
   taskType = TaskType;
   taskPriority = TaskPriority;
@@ -36,6 +38,11 @@ export class BacklogComponent implements OnInit {
   tasksPerPage = 7;
   totalPages = 0;
   currentPage = 1;
+  selectedType: string = 'all';
+  selectedPriority: string = 'all';
+  titleSortOrder: 'asc' | 'desc' = 'asc';
+  typeSortOrder: 'asc' | 'desc' = 'asc';
+  prioritySortOrder: 'asc' | 'desc' = 'asc';
 
   constructor(
     private taskService: TaskService,
@@ -56,17 +63,32 @@ export class BacklogComponent implements OnInit {
   getAllTasks() {
     this.taskService.getAllTasks().subscribe({
       next: (response: { result: ITask[] }) => {
-        this.task = response.result;
+        this.task = response.result.filter(task => task.status === 'new');
         this.totalPages = Math.ceil(this.task.length / this.tasksPerPage);
-        console.log('total psgeed', this.totalPages);
+        this.applyFilters();
       },
     });
+  }
+
+  applyFilters() {
+    this.filteredTasks = this.task.filter(task => {
+      const typeFilter =
+        !this.selectedType ||
+        this.selectedType === 'all' ||
+        task.type === this.selectedType;
+      const priorityFilter =
+        !this.selectedPriority ||
+        this.selectedPriority === 'all' ||
+        task.priority === this.selectedPriority;
+      return typeFilter && priorityFilter;
+    });
+    this.totalPages = Math.ceil(this.filteredTasks.length / this.tasksPerPage);
   }
 
   getCurrentPageTasks(): ITask[] {
     const startIndex = (this.currentPage - 1) * this.tasksPerPage;
     const endIndex = startIndex + this.tasksPerPage;
-    return this.task.slice(startIndex, endIndex);
+    return this.filteredTasks.slice(startIndex, endIndex);
   }
 
   get pages(): number[] {
@@ -116,6 +138,45 @@ export class BacklogComponent implements OnInit {
         return 'badge badge-dark';
       default:
         return 'badge badge-light';
+    }
+  }
+
+  sortData(column: string) {
+    switch (column) {
+      case 'title':
+        this.titleSortOrder = this.toggleSortOrder(this.titleSortOrder);
+        this.filteredTasks.sort((a, b) => {
+          return this.sortByString(a.title, b.title, this.titleSortOrder);
+        });
+        break;
+      case 'type':
+        this.typeSortOrder = this.toggleSortOrder(this.typeSortOrder);
+        this.filteredTasks.sort((a, b) => {
+          return this.sortByString(a.type, b.type, this.typeSortOrder);
+        });
+        break;
+      case 'priority':
+        this.prioritySortOrder = this.toggleSortOrder(this.prioritySortOrder);
+        this.filteredTasks.sort((a, b) => {
+          return this.sortByString(
+            a.priority,
+            b.priority,
+            this.prioritySortOrder
+          );
+        });
+        break;
+    }
+  }
+
+  toggleSortOrder(currentOrder: 'asc' | 'desc'): 'asc' | 'desc' {
+    return currentOrder === 'asc' ? 'desc' : 'asc';
+  }
+
+  sortByString(a: string, b: string, sortOrder: 'asc' | 'desc'): number {
+    if (sortOrder === 'asc') {
+      return a.localeCompare(b);
+    } else {
+      return b.localeCompare(a);
     }
   }
 }

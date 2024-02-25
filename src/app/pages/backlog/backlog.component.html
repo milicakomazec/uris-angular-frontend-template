@@ -2,15 +2,42 @@
   <div class="header-container">
     <h3>Backlog</h3>
     <button class="backlog-btn">NEW TASK</button>
+    <div class="filter-container">
+      <div class="filter">
+        <label>Type</label>
+        <select
+          (change)="applyFilters()"
+          [(ngModel)]="selectedType"
+          class="selectpicker form-control rounded shadow">
+          <option value="all">All</option>
+          <option value="epic">Epic</option>
+          <option value="task">Task</option>
+          <option value="bug">Bug</option>
+        </select>
+      </div>
+      <div class="filter">
+        <label>Priority</label>
+        <select
+          (change)="applyFilters()"
+          [(ngModel)]="selectedPriority"
+          class="selectpicker form-control rounded shadow">
+          <option value="all">All</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="urgent">Urgent</option>
+        </select>
+      </div>
+    </div>
   </div>
   <div class="table-responsive">
     <table class="table">
       <thead class="table-header">
         <tr>
-          <th>Project</th>
+          <th (click)="sortData('title')" class="sortable">Title</th>
           <th>Status</th>
-          <th>Type</th>
-          <th>Priority</th>
+          <th (click)="sortData('type')" class="sortable">Type</th>
+          <th (click)="sortData('priority')" class="sortable">Priority</th>
           <th>Actions</th>
         </tr>
       </thead>
