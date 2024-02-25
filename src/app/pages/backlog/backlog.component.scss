@@ -1,0 +1,111 @@
+@import '../../../assets/scss/variables';
+
+nav {
+  padding-bottom: 5px;
+}
+
+// Header container
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  color: $text-color-green-dark;
+}
+
+// Backlog button
+.backlog-btn {
+  border-radius: 5px;
+  background-color: #293c3b;
+  color: $text-color-primary;
+  margin-right: 10px;
+}
+
+// Table
+.table th,
+.table td {
+  padding: 1.5rem;
+}
+
+// Badge
+.badge {
+  text-transform: uppercase;
+}
+
+// Table header
+.table th {
+  font-weight: 600;
+}
+
+.table-header th {
+  color: $action-color;
+  background-color: #eef5f3;
+}
+
+// Task type
+.epic {
+  background-color: $action-color;
+}
+
+.task {
+  background-color: $background-color-light;
+}
+
+.bug {
+  background-color: $text-color-green-dark;
+}
+
+// Priority badge
+.low {
+  background-color: #57a4e4;
+}
+
+.medium {
+  background-color: #e6d96d;
+}
+
+.high {
+  background-color: #f88b24;
+}
+
+.urgent {
+  background-color: #d8271b;
+}
+
+// Pagination
+.page-link {
+  background-color: #eef5f3;
+  color: #84a98c;
+}
+
+.page-link.active,
+.active > .page-link {
+  border-color: #a6bcbc;
+  transform: scale(1.2);
+}
+
+.page-link:focus,
+.active > .page-link:focus {
+  border-color: #a6bcbc !important;
+  box-shadow: none;
+}
+
+.actions-wrapper i {
+  margin-left: 15px;
+}
+
+// Shadow style
+.shadow {
+  box-shadow: 0 0 2rem 0 rgba(110, 124, 118, 0.15) !important;
+}
+
+// Hover effect
+
+.table tbody tr:hover td,
+.table tbody tr:hover th {
+  background-color: rgba(132, 169, 140, 0.5);
+}
+
+.page-link:hover .page-link:focus {
+  background-color: #8b9f9f;
+  color: $text-color-primary;
+}

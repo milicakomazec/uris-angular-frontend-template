@@ -1,0 +1,82 @@
+<div class="container shadow">
+  <div class="header-container">
+    <h3>Backlog</h3>
+    <button class="backlog-btn">NEW TASK</button>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead class="table-header">
+        <tr>
+          <th>Project</th>
+          <th>Status</th>
+          <th>Type</th>
+          <th>Priority</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of getCurrentPageTasks(); let i = index">
+          <th>
+            <span>{{ item.title }}</span>
+          </th>
+          <td>{{ item.status }}</td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                epic: item.type === 'epic',
+                task: item.type === 'task',
+                bug: item.type === 'bug'
+              }">
+              <i></i> {{ item.type }}
+            </span>
+          </td>
+
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                low: item.priority === 'low',
+                medium: item.priority === 'medium',
+                high: item.priority === 'high',
+                urgent: item.priority === 'urgent'
+              }">
+              {{ item.priority }}
+            </span>
+          </td>
+
+          <td class="actions-wrapper">
+            <i class="bi bi-pencil-fill"></i>
+            <i class="bi bi-trash-fill"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="prevPage()" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li
+        class="page-item"
+        *ngFor="let page of pages"
+        [class.active]="page === currentPage">
+        <a
+          class="page-link"
+          [routerLink]="['/backlog']"
+          [queryParams]="{ page: page }"
+          (click)="goToPage(page)">
+          {{ page }}
+        </a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="nextPage()" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
