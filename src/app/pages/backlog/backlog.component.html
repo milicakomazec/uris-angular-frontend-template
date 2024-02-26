@@ -1,7 +1,10 @@
 <div class="container shadow">
   <div class="header-container">
-    <h3>Backlog</h3>
-    <button class="backlog-btn">NEW TASK</button>
+    <div>
+      <h3>Backlog</h3>
+      <button class="backlog-btn">NEW TASK</button>
+    </div>
+
     <div class="filter-container">
       <div class="filter">
         <label>Type</label>
@@ -35,6 +38,7 @@
       <thead class="table-header">
         <tr>
           <th (click)="sortData('title')" class="sortable">Title</th>
+          <th>Description</th>
           <th>Status</th>
           <th (click)="sortData('type')" class="sortable">Type</th>
           <th (click)="sortData('priority')" class="sortable">Priority</th>
@@ -46,6 +50,7 @@
           <th>
             <span>{{ item.title }}</span>
           </th>
+          <td class="left-aligned">{{ item.description }}</td>
           <td>{{ item.status }}</td>
           <td>
             <span
@@ -73,8 +78,8 @@
           </td>
 
           <td class="actions-wrapper">
-            <i class="bi bi-pencil-fill"></i>
-            <i class="bi bi-trash-fill"></i>
+            <i class="bi bi-pencil-fill" (click)="editTask(item.id)"></i>
+            <i class="bi bi-trash-fill" (click)="openModal(item.id)"></i>
           </td>
         </tr>
       </tbody>
@@ -106,4 +111,28 @@
       </li>
     </ul>
   </nav>
+  <div *ngIf="isModalVisible" class="delete-modal">
+    <div class="delete-modal-dialog">
+      <div class="delete-modal-content">
+        <div class="delete-modal-header">
+          <h5 class="delete-modal-title">Confirm task deletion</h5>
+          <button
+            type="button"
+            class="btn delete-close-button"
+            (click)="closeModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+
+        <div class="delete-modal-footer">
+          <button type="button" class="btn btn-cancel" (click)="closeModal()">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-delete" (click)="deleteTask()">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

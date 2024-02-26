@@ -1,17 +1,67 @@
+// import { HttpClient } from '@angular/common/http';
+// import { Injectable } from '@angular/core';
+// import { Observable } from 'rxjs';
+
+// export interface GetUserResponse {
+//   status: number;
+//   message: number;
+//   result: User[];
+// }
+
+// export interface User {
+//   status: number;
+//   message: number;
+//   result: User;
+// }
+
+// export interface User {
+//   userId: number;
+//   email: string;
+//   fullName: string;
+//   phone: string;
+//   mobile: string;
+//   websiteUrl: string;
+//   gitHubUrl: string;
+//   linkedinUrl: string;
+//   address: string;
+// }
+
+// @Injectable({
+//   providedIn: 'root',
+// })
+// export class UserService {
+//   private apiUrl =
+//     'https://app.microenv.com/backend/key/c24220b2cd4cbf293c2b15/rest/api/users';
+
+//   constructor(private http: HttpClient) {}
+
+//   getAllUsers(): Observable<GetUserResponse> {
+//     return this.http.get<GetUserResponse>(this.apiUrl);
+//   }
+
+//   getUserById(): Observable<User> {
+//     const userId = localStorage.getItem('userId');
+
+//     if (!userId) {
+//       console.log('Error fetching user');
+//     }
+
+//     const url = `${this.apiUrl}/${userId}`;
+
+//     return this.http.get<User>(url);
+//   }
+// }
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { IResponse } from '../task/task.service';
 
 export interface GetUserResponse {
   status: number;
   message: number;
   result: User[];
-}
-
-export interface User {
-  status: number;
-  message: number;
-  result: User;
 }
 
 export interface User {
@@ -31,15 +81,32 @@ export interface User {
 })
 export class UserService {
   private apiUrl =
-    'https://app.microenv.com/backend/key/5b44f5b2d92346ed2eb405/rest/api/users';
+    'https://app.microenv.com/backend/key/c24220b2cd4cbf293c2b15/rest/api/users';
+  private allUsersSubject: BehaviorSubject<User[]> = new BehaviorSubject<
+    User[]
+  >([]);
+  public allUsers$: Observable<User[]> = this.allUsersSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
-
-  getAllUsers(): Observable<GetUserResponse> {
-    return this.http.get<GetUserResponse>(this.apiUrl);
+  constructor(private http: HttpClient) {
+    this.fetchAllUsers();
   }
 
-  getUserById(): Observable<User> {
+  private fetchAllUsers(): void {
+    this.http
+      .get<GetUserResponse>(this.apiUrl)
+      .pipe(
+        tap((response: GetUserResponse) => {
+          if (response && response.result) {
+            this.allUsersSubject.next(response.result);
+          } else {
+            console.error('Error fetching users:', response);
+          }
+        })
+      )
+      .subscribe();
+  }
+
+  getUserById(): Observable<IResponse<User>> {
     const userId = localStorage.getItem('userId');
 
     if (!userId) {
@@ -47,7 +114,6 @@ export class UserService {
     }
 
     const url = `${this.apiUrl}/${userId}`;
-
-    return this.http.get<User>(url);
+    return this.http.get<IResponse<User>>(url);
   }
 }

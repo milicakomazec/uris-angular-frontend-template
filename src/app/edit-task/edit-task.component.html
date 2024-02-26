@@ -1,0 +1,60 @@
+<div class="container">
+  <form (ngSubmit)="onSubmit()">
+    <div class="row">
+      <h4>Edit task</h4>
+      <div class="input-group">
+        <div class="label">Title</div>
+        <input type="text" [(ngModel)]="task.title" name="title" required />
+      </div>
+      <div class="input-group">
+        <div class="label">Description</div>
+        <input
+          type="text"
+          [(ngModel)]="task.description"
+          name="description"
+          required />
+      </div>
+      <div class="input-group">
+        <div class="label">Status</div>
+        <select [(ngModel)]="task.status" name="status" required>
+          <option *ngFor="let status of taskStatus" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="label">Type</div>
+        <select [(ngModel)]="task.type" name="type" required>
+          <option *ngFor="let type of taskType" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="label">Priority</div>
+        <select [(ngModel)]="task.priority" name="priority" required>
+          <option *ngFor="let priority of taskPriority" [value]="priority">
+            {{ priority }}
+          </option>
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="label">Assigned user</div>
+        <select
+          [(ngModel)]="task.assignedUserId"
+          name="assignedUserId"
+          required>
+          <option *ngFor="let user of allUsers" [value]="user.userId">
+            {{ user.fullName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button type="submit">Submit</button>
+        <button type="button" (click)="onReset()">Reset</button>
+      </div>
+    </div>
+  </form>
+</div>

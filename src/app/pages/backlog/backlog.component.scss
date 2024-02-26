@@ -10,6 +10,7 @@ nav {
   justify-content: space-between;
   padding: 20px;
   color: $text-color-green-dark;
+  align-items: center;
 
   .filter-container {
     display: flex;
@@ -61,9 +62,10 @@ nav {
   background-color: #eef5f3;
 }
 
-.table-header th:first-child {
-  text-align: left;
+.left-aligned {
+  text-align: left !important;
 }
+
 .table td {
   text-align: center;
 }
@@ -137,6 +139,98 @@ nav {
   color: $text-color-primary;
 }
 
+.btn-cancel:hover {
+  background-color: darken($action-color, 20%);
+  transform: scale(1.1);
+}
+
+.btn-delete:hover {
+  background-color: darken(#dc3545, 20%);
+  transform: scale(1.1);
+}
+
 .sortable {
   cursor: pointer;
+}
+
+// Modal
+
+.delete-modal {
+  display: block;
+  position: fixed;
+  top: calc(50vh - 150px);
+  left: calc(50vw - 150px);
+  width: 400px;
+  overflow: hidden;
+  outline: 0;
+}
+
+.delete-modal-dialog {
+  width: auto;
+  margin: 10px;
+}
+
+.delete-modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+}
+
+.delete-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid $action-color;
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+  background-color: #eef5f3;
+  color: #84a98c;
+}
+
+.delete-modal-title {
+  margin: 0;
+}
+
+.close-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: $action-color;
+  text-align: center;
+}
+
+.delete-modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 15px;
+  background-color: #eef5f3;
+  color: $background-color-light;
+  text-align: center;
+}
+
+.delete-modal-footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px;
+  border-top: 1px solid $action-color;
+  border-bottom-left-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  background-color: #eef5f3;
+  color: #84a98c;
+}
+
+.btn-cancel {
+  color: #fff;
+  background-color: $action-color;
+}
+
+.btn-delete {
+  color: #fff;
+  background-color: #dc3545;
 }

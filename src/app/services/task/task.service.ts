@@ -34,11 +34,29 @@ export const TaskPriority = ['low', 'medium', 'high', 'urgent'];
 })
 export class TaskService {
   private apiUrl =
-    'https://app.microenv.com/backend/key/5b44f5b2d92346ed2eb405/rest/api/tasks';
+    'https://app.microenv.com/backend/key/c24220b2cd4cbf293c2b15/rest/api/tasks';
+
+  private taskIdApiUrl =
+    'https://app.microenv.com/backend/key/1b40b895e89f87f922b2b3/rest/api/tasks/';
+
+  readonly TaskStatus: ITaskStatus[] = [
+    'new',
+    'in progress',
+    'testing',
+    'done',
+  ];
+  readonly TaskType: ITaskType[] = ['epic', 'bug', 'task'];
+  readonly TaskPriority: ITaskPriority[] = ['low', 'medium', 'high', 'urgent'];
+
   constructor(private http: HttpClient) {}
 
   getAllTasks(): Observable<IResponse<ITask[]>> {
     return this.http.get<IResponse<ITask[]>>(`${this.apiUrl}/get`);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getTaskById(id: number): Observable<IResponse<ITask>> {
+    return this.http.get<IResponse<ITask>>(`${this.taskIdApiUrl}3233`);
   }
 
   addTask(data: ITask): Observable<IResponse<ITask>> {
@@ -46,6 +64,13 @@ export class TaskService {
   }
 
   editTask(id: number, data: ITask): Observable<IResponse<ITask>> {
-    return this.http.put<IResponse<ITask>>(`${this.apiUrl}/${id}`, data);
+    return this.http.put<IResponse<ITask>>(
+      `${this.taskIdApiUrl}update/3233`,
+      data
+    );
+  }
+
+  deleteTaskById(taskId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/delete/${taskId}`);
   }
 }

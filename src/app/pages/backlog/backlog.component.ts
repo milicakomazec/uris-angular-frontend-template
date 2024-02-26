@@ -1,13 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   ITask,
   TaskPriority,
@@ -43,17 +36,20 @@ export class BacklogComponent implements OnInit {
   titleSortOrder: 'asc' | 'desc' = 'asc';
   typeSortOrder: 'asc' | 'desc' = 'asc';
   prioritySortOrder: 'asc' | 'desc' = 'asc';
+  taskToDeleteId: number | null = null;
+  isModalVisible: boolean = false;
 
   constructor(
     private taskService: TaskService,
-    private fb: FormBuilder,
+
+    // private fb: FormBuilder,
     private router: Router
   ) {
-    this.taskForm = this.fb.group({
-      title: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      status: new FormControl('OPEN', [Validators.required]),
-    });
+    // this.taskForm = this.fb.group({
+    //   title: new FormControl('', [Validators.required]),
+    //   description: new FormControl('', [Validators.required]),
+    //   status: new FormControl('OPEN', [Validators.required]),
+    // });
   }
 
   ngOnInit(): void {
@@ -82,7 +78,11 @@ export class BacklogComponent implements OnInit {
         task.priority === this.selectedPriority;
       return typeFilter && priorityFilter;
     });
+    this.currentPage = 1;
     this.totalPages = Math.ceil(this.filteredTasks.length / this.tasksPerPage);
+    this.router.navigate(['/backlog'], {
+      queryParams: { page: this.currentPage },
+    });
   }
 
   getCurrentPageTasks(): ITask[] {
@@ -178,5 +178,43 @@ export class BacklogComponent implements OnInit {
     } else {
       return b.localeCompare(a);
     }
+  }
+
+  @ViewChild('deleteModal') deleteModal!: ElementRef;
+
+  openModal(taskId: number) {
+    console.log('task', taskId, this.isModalVisible);
+    this.isModalVisible = true;
+    this.taskToDeleteId = taskId;
+  }
+
+  closeModal() {
+    this.taskToDeleteId = null;
+    this.isModalVisible = false;
+  }
+
+  deleteTask() {
+    if (this.taskToDeleteId) {
+      this.taskService.deleteTaskById(this.taskToDeleteId).subscribe({
+        next: () => {
+          // this.getAllTasks();
+          const index = this.filteredTasks.findIndex(
+            task => task.id === this.taskToDeleteId
+          );
+          if (index !== -1) {
+            this.filteredTasks.splice(index, 1);
+          }
+          this.closeModal();
+        },
+        error: error => {
+          console.error('Error deleting task:', error);
+          this.closeModal();
+        },
+      });
+    }
+  }
+
+  editTask(taskId: number) {
+    this.router.navigate(['/task/', taskId]);
   }
 }
