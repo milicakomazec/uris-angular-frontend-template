@@ -14,6 +14,7 @@
           class="selectpicker form-control rounded shadow">
           <option value="all">All</option>
           <option value="epic">Epic</option>
+          <option value="feature">Feature</option>
           <option value="task">Task</option>
           <option value="bug">Bug</option>
         </select>
@@ -58,7 +59,8 @@
               [ngClass]="{
                 epic: item.type === 'epic',
                 task: item.type === 'task',
-                bug: item.type === 'bug'
+                bug: item.type === 'bug',
+                feature: item.type === 'feature'
               }">
               <i></i> {{ item.type }}
             </span>

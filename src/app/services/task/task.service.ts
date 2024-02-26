@@ -23,8 +23,8 @@ export interface ITask {
 export type ITaskStatus = 'new' | 'in progress' | 'testing' | 'done';
 export const TaskStatus = ['new', 'in progress', 'testing', 'done'];
 
-export type ITaskType = 'epic' | 'bug' | 'task';
-export const TaskType = ['epic', 'bug', 'task'];
+export type ITaskType = 'epic' | 'bug' | 'task' | 'feature';
+export const TaskType = ['epic', 'bug', 'task', 'feature'];
 
 export type ITaskPriority = 'low' | 'medium' | 'high' | 'urgent';
 export const TaskPriority = ['low', 'medium', 'high', 'urgent'];
