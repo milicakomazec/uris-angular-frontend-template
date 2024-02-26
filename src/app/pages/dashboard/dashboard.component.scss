@@ -1,3 +1,5 @@
+@import '../../../assets/scss/variables';
+
 .chart-type-container {
   width: 450px;
   height: 350px;
@@ -17,4 +19,38 @@
     border: none;
     box-shadow: 0 0 2rem 0 rgba(110, 124, 118, 0.15);
   }
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  color: $text-color-green-dark;
+  align-items: center;
+}
+
+// Table
+.table th,
+.table td {
+  padding: 1.5rem;
+}
+
+// Table header
+.table th {
+  font-weight: 600;
+}
+
+.table-header th {
+  color: $action-color;
+  text-align: center;
+  background-color: #eef5f3;
+}
+
+table {
+  margin-top: 20px;
+}
+
+table td span {
+  display: flex;
+  flex-direction: column;
 }

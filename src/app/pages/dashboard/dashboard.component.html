@@ -21,9 +21,36 @@
         {{ user.fullName }}
       </option>
     </select>
-    <div class="shadow">
+    <div class="smallere">
       <app-user-task-distribution-chart [chartData]="chartData">
       </app-user-task-distribution-chart>
     </div>
+  </div>
+  <div class="table-responsive shadow">
+    <table class="table">
+      <thead class="table-header">
+        <tr>
+          <th>Full name</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Links</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of allUsers$ | async">
+          <th>
+            <span>{{ user.fullName }}</span>
+          </th>
+          <td class="left-aligned">{{ user.email }}</td>
+          <td class="left-aligned">{{ user.address }}</td>
+          <td>{{ user.mobile }}</td>
+          <td>
+            <span>{{ user.gitHubUrl }}</span>
+            <span>{{ user.linkedinUrl }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

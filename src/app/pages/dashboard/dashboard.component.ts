@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   allUsers$: Observable<IUser[]> = this.userService.allUsers$;
   tasks: ITask[] = [];
   selectedUserId: number | undefined;
-  chartData: { labels: string[]; data: number[] } | undefined;
+  chartData!: { title: string; labels: string[]; data: number[] }[];
 
   constructor(
     private taskService: TaskService,
@@ -93,14 +93,27 @@ export class DashboardComponent implements OnInit {
     const userTasks = this.tasks.filter(task => task.assignedUserId === userId);
 
     const statusCounts: { [key: string]: number } = {};
+    const typeCounts: { [key: string]: number } = {};
+
     userTasks.forEach(task => {
+      // Count status
       const status = task.status;
       statusCounts[status] = (statusCounts[status] || 0) + 1;
+
+      // Count type
+      const type = task.type;
+      typeCounts[type] = (typeCounts[type] || 0) + 1;
     });
 
-    const labels = Object.keys(statusCounts);
-    const data = labels.map(label => statusCounts[label]);
+    const statusLabels = Object.keys(statusCounts);
+    const statusData = statusLabels.map(label => statusCounts[label]);
 
-    this.chartData = { labels, data };
+    const typeLabels = Object.keys(typeCounts);
+    const typeData = typeLabels.map(label => typeCounts[label]);
+
+    this.chartData = [
+      { title: 'Status', labels: statusLabels, data: statusData },
+      { title: 'Type', labels: typeLabels, data: typeData },
+    ];
   }
 }
