@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit } from '@angular/core';
 import {
+  ITask,
   TaskPriority,
   TaskService,
   TaskStatus,
@@ -9,7 +9,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { User, UserService } from '../services/user/user.service';
+import { IUser, UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-edit-task',
@@ -20,12 +20,12 @@ import { User, UserService } from '../services/user/user.service';
 })
 export class EditTaskComponent implements OnInit {
   taskId!: number;
-  task!: any;
+  task!: ITask;
   isLoading: boolean = true;
   taskType = TaskType;
   taskStatus = TaskStatus;
   taskPriority = TaskPriority;
-  allUsers: User[] = [];
+  allUsers: IUser[] = [];
   constructor(
     private route: ActivatedRoute,
     private taskService: TaskService,

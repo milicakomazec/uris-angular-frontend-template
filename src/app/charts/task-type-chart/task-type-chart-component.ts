@@ -5,7 +5,7 @@ import { ChartData, ChartOptions, Chart, registerables } from 'chart.js';
   selector: 'app-task-type-chart',
   standalone: true,
   templateUrl: './task-type-chart-component.html',
-  styleUrl: './task-type-chart-component.scss',
+  styleUrl: '../chart-styles.scss',
 })
 export class TaskTypeChartComponent {
   @Input() taskTypeCounts: { type: string; count: number }[] = [];
@@ -24,7 +24,7 @@ export class TaskTypeChartComponent {
   createChart() {
     Chart.register(...registerables);
     const ctx = this.chartCanvas.nativeElement.getContext('2d');
-    console.log('ctx', ctx);
+
     this.chartData = {
       labels: this.taskTypeCounts.map(data => data.type),
       datasets: [

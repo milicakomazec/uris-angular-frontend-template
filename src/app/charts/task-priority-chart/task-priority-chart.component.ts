@@ -6,7 +6,7 @@ import { ChartData, ChartOptions, Chart, registerables } from 'chart.js';
   standalone: true,
   imports: [],
   templateUrl: './task-priority-chart.component.html',
-  styleUrl: './task-priority-chart.component.scss',
+  styleUrl: '../chart-styles.scss',
 })
 export class TaskPriorityChartComponent {
   @Input() taskPriorityCounts: { priority: string; count: number }[] = [];
@@ -25,13 +25,13 @@ export class TaskPriorityChartComponent {
   createChart() {
     Chart.register(...registerables);
     const ctx = this.chartCanvas.nativeElement.getContext('2d');
-    console.log('ctx', ctx);
+
     this.chartData = {
       labels: this.taskPriorityCounts.map(data => data.priority),
       datasets: [
         {
           data: this.taskPriorityCounts.map(data => data.count),
-          backgroundColor: ['#060047', '#B3005E', '#E90064', '#FF5F9E'],
+          backgroundColor: ['#5F0F40', '#FB8B24', '#E36414', '#9A031E'],
         },
       ],
     };

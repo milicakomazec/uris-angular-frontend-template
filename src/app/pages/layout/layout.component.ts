@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth/auth-service';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent {
-  toggleSideNav: boolean = true;
+  toggleSideNav: boolean = false;
 
   constructor(
     private router: Router,
@@ -24,7 +24,7 @@ export class LayoutComponent {
 
   closeMenu(path: string) {
     this.router.navigate([path]);
-    this.toggleSideNav = true;
+    // this.toggleSideNav = true;
   }
 
   onLogout(): void {

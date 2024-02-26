@@ -55,19 +55,16 @@ export class TaskService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getTaskById(id: number): Observable<IResponse<ITask>> {
-    return this.http.get<IResponse<ITask>>(`${this.taskIdApiUrl}3233`);
+  getTaskById(id: number): Observable<ITask> {
+    return this.http.get<ITask>(`${this.taskIdApiUrl}3233`);
   }
 
   addTask(data: ITask): Observable<IResponse<ITask>> {
     return this.http.post<IResponse<ITask>>(`${this.apiUrl}/add`, data);
   }
 
-  editTask(id: number, data: ITask): Observable<IResponse<ITask>> {
-    return this.http.put<IResponse<ITask>>(
-      `${this.taskIdApiUrl}update/3233`,
-      data
-    );
+  editTask(id: number, data: ITask): Observable<ITask> {
+    return this.http.put<ITask>(`${this.taskIdApiUrl}update/3233`, data);
   }
 
   deleteTaskById(taskId: number): Observable<void> {

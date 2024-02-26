@@ -183,7 +183,6 @@ export class BacklogComponent implements OnInit {
   @ViewChild('deleteModal') deleteModal!: ElementRef;
 
   openModal(taskId: number) {
-    console.log('task', taskId, this.isModalVisible);
     this.isModalVisible = true;
     this.taskToDeleteId = taskId;
   }

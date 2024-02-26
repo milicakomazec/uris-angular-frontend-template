@@ -13,4 +13,17 @@
         [taskStatusCounts]="taskStatusCounts"></app-task-status-chart>
     </div>
   </div>
+  <div class="user-chart-container">
+    <label for="userDropdown" class="form-label">Select user:</label>
+    <select id="userDropdown" (change)="onSelectUser($event)">
+      <option value="" disabled selected hidden>Choose user to see data</option>
+      <option *ngFor="let user of allUsers$ | async" [value]="user.userId">
+        {{ user.fullName }}
+      </option>
+    </select>
+    <div class="shadow">
+      <app-user-task-distribution-chart [chartData]="chartData">
+      </app-user-task-distribution-chart>
+    </div>
+  </div>
 </div>

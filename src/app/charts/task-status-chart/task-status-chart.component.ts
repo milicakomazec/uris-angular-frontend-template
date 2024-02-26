@@ -6,7 +6,7 @@ import { ChartData, ChartOptions, Chart, registerables } from 'chart.js';
   standalone: true,
   imports: [],
   templateUrl: './task-status-chart.component.html',
-  styleUrl: './task-status-chart.component.scss',
+  styleUrl: '../chart-styles.scss',
 })
 export class TaskStatusChartComponent {
   @Input() taskStatusCounts: { status: string; count: number }[] = [];
@@ -25,13 +25,13 @@ export class TaskStatusChartComponent {
   createChart() {
     Chart.register(...registerables);
     const ctx = this.chartCanvas.nativeElement.getContext('2d');
-    console.log('ctx', ctx);
+
     this.chartData = {
       labels: this.taskStatusCounts.map(data => data.status),
       datasets: [
         {
           data: this.taskStatusCounts.map(data => data.count),
-          backgroundColor: ['#CBE4DE', '#0C2233', '#065471', '#0A91AB'],
+          backgroundColor: ['#F3E99F', '#FF6D60 ', '#F7D060 ', '#F3B664 '],
         },
       ],
     };

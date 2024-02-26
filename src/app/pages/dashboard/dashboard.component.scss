@@ -7,3 +7,14 @@
   display: flex;
   gap: 15px;
 }
+
+.user-chart-container {
+  margin-top: 20px;
+  label {
+    margin-right: 10px;
+  }
+  select {
+    border: none;
+    box-shadow: 0 0 2rem 0 rgba(110, 124, 118, 0.15);
+  }
+}

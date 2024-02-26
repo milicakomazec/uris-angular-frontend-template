@@ -7,10 +7,10 @@ import { IResponse } from '../task/task.service';
 export interface GetUserResponse {
   status: number;
   message: number;
-  result: User[];
+  result: IUser[];
 }
 
-export interface User {
+export interface IUser {
   userId: number;
   email: string;
   fullName: string;
@@ -28,10 +28,10 @@ export interface User {
 export class UserService {
   private apiUrl =
     'https://app.microenv.com/backend/key/c24220b2cd4cbf293c2b15/rest/api/users';
-  private allUsersSubject: BehaviorSubject<User[]> = new BehaviorSubject<
-    User[]
+  private allUsersSubject: BehaviorSubject<IUser[]> = new BehaviorSubject<
+    IUser[]
   >([]);
-  public allUsers$: Observable<User[]> = this.allUsersSubject.asObservable();
+  public allUsers$: Observable<IUser[]> = this.allUsersSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.fetchAllUsers();
@@ -52,7 +52,7 @@ export class UserService {
       .subscribe();
   }
 
-  getUserById(): Observable<IResponse<User>> {
+  getUserById(): Observable<IResponse<IUser>> {
     const userId = localStorage.getItem('userId');
 
     if (!userId) {
@@ -60,6 +60,6 @@ export class UserService {
     }
 
     const url = `${this.apiUrl}/${userId}`;
-    return this.http.get<IResponse<User>>(url);
+    return this.http.get<IResponse<IUser>>(url);
   }
 }
