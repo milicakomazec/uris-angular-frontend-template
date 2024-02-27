@@ -31,6 +31,9 @@ export class DashboardComponent implements OnInit {
   tasks: ITask[] = [];
   selectedUserId: number | undefined;
   chartData!: { title: string; labels: string[]; data: number[] }[];
+  totalLoggedTime = 0;
+  totalUsers = 0;
+  totalActiveUrgentTasks = 0;
 
   constructor(
     private taskService: TaskService,
@@ -41,6 +44,13 @@ export class DashboardComponent implements OnInit {
     this.taskService.getAllTasks().subscribe(
       response => {
         this.tasks = response.result;
+        this.totalLoggedTime = this.tasks.reduce(
+          (total, task) => total + task.loggedTime,
+          0
+        );
+        this.totalActiveUrgentTasks = this.tasks.filter(
+          task => task.priority === 'urgent' && task.status !== 'done'
+        ).length;
         this.taskTypeCounts = this.calculateCounts(this.tasks, 'type') as {
           type: string;
           count: number;
@@ -66,6 +76,7 @@ export class DashboardComponent implements OnInit {
       if (users.length > 0) {
         this.selectedUserId = users[0].userId;
         this.generateChartData(this.selectedUserId);
+        this.totalUsers = users.length;
       }
     });
   }

@@ -78,20 +78,6 @@ div {
   margin-left: 10px;
 }
 
-.edit-info i {
-  color: $action-color;
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
-  background-color: $text-color-secondary;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .col-md-8 .row:hover {
   background-color: $action-color;
   opacity: 0.8;

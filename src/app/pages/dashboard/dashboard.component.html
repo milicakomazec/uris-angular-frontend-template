@@ -26,6 +26,24 @@
       </app-user-task-distribution-chart>
     </div>
   </div>
+  <div class="info-bubble-wraper">
+    <div class="info-bubble bubble1 shadow">
+      <span>Total users</span>
+      <span class="info-value">{{ this.totalUsers }}</span>
+    </div>
+    <div class="info-bubble bubble2 shadow">
+      <span>Total tasks</span>
+      <span class="info-value">{{ this.tasks.length }}</span>
+    </div>
+    <div class="info-bubble bubble3 shadow">
+      <span>Active urgent tasks</span>
+      <span class="info-value">{{ this.totalActiveUrgentTasks }}</span>
+    </div>
+    <div class="info-bubble bubble4 shadow">
+      <span>Total logged time</span>
+      <span class="info-value">{{ this.totalLoggedTime }}</span>
+    </div>
+  </div>
   <div class="table-responsive shadow">
     <table class="table">
       <thead class="table-header">

@@ -2,7 +2,6 @@
   <div class="nav-bar-icon" (click)="toggleSideNavigation()">
     <i class="bi bi-list"></i>
   </div>
-  <div class="project-info">URIS frontend template</div>
   <div class="logout-container" (click)="onLogout()">
     <i class="bi bi-box-arrow-right nav-bar-icon"></i>
     Logout
@@ -11,6 +10,7 @@
 
 <div class="side-nav-container">
   <div class="side-nav" [ngClass]="{ 'hide-menu': toggleSideNav }">
+    <div class="project-info">URIS frontend template</div>
     <ul>
       <li (click)="closeMenu('dashboard')">
         <i class="bi bi-graph-up"></i>

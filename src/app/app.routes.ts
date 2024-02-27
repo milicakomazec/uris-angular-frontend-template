@@ -6,6 +6,7 @@ import { AuthGuardService } from './services/auth/auth-guard-service';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { BacklogComponent } from './pages/backlog/backlog.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
+import { BoardViewComponent } from './pages/board-view/board-view.component';
 
 export const routes: Routes = [
   {
@@ -37,7 +38,7 @@ export const routes: Routes = [
 
       {
         path: 'board',
-        component: DashboardComponent,
+        component: BoardViewComponent,
       },
       {
         path: 'profile',
