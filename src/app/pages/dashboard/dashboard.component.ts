@@ -1,12 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ITask, TaskService } from '../../services/task/task.service';
-import { IUser, UserService } from '../../services/user/user.service';
-import { TaskTypeChartComponent } from '../../charts/task-type-chart/task-type-chart-component';
-import { TaskPriorityChartComponent } from '../../charts/task-priority-chart/task-priority-chart.component';
-import { TaskStatusChartComponent } from '../../charts/task-status-chart/task-status-chart.component';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { ITask, IUser } from '../../shared/interfaces';
+import { TaskService } from '../../services/task/task.service';
+import { UserService } from '../../services/user/user.service';
+import { TaskDistribution, TaskPriority, TaskStatus } from '../../shared/enums';
+import { TaskTypeChartComponent } from '../../charts/task-type-chart/task-type-chart-component';
+import { TaskStatusChartComponent } from '../../charts/task-status-chart/task-status-chart.component';
+import { TaskPriorityChartComponent } from '../../charts/task-priority-chart/task-priority-chart.component';
 import { UserTaskDistributionChartComponent } from '../../charts/user-task-distribution-chart/user-task-distribution-chart.component';
 
 @Component({
@@ -41,36 +43,44 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.taskService.getAllTasks().subscribe(
-      response => {
+    this.taskService.getAllTasks().subscribe({
+      next: response => {
         this.tasks = response.result;
         this.totalLoggedTime = this.tasks.reduce(
           (total, task) => total + task.loggedTime,
           0
         );
         this.totalActiveUrgentTasks = this.tasks.filter(
-          task => task.priority === 'urgent' && task.status !== 'done'
+          task =>
+            task.priority === TaskPriority.URGENT &&
+            task.status !== TaskStatus.DONE
         ).length;
-        this.taskTypeCounts = this.calculateCounts(this.tasks, 'type') as {
+        this.taskTypeCounts = this.calculateCounts(
+          this.tasks,
+          TaskDistribution.TYPE
+        ) as {
           type: string;
           count: number;
         }[];
         this.taskPriorityCounts = this.calculateCounts(
           this.tasks,
-          'priority'
+          TaskDistribution.PRIORITY
         ) as { priority: string; count: number }[];
-        this.taskStatusCounts = this.calculateCounts(this.tasks, 'status') as {
+        this.taskStatusCounts = this.calculateCounts(
+          this.tasks,
+          TaskDistribution.STATUS
+        ) as {
           status: string;
           count: number;
         }[];
 
         this.isLoading = false;
       },
-      error => {
+      error: error => {
         console.error('Error fetching tasks:', error);
         this.isLoading = false;
-      }
-    );
+      },
+    });
 
     this.allUsers$.subscribe(users => {
       if (users.length > 0) {
@@ -95,8 +105,9 @@ export class DashboardComponent implements OnInit {
       count: counts[key],
     }));
   }
-  onSelectUser(event: any) {
-    this.selectedUserId = Number(event.target.value);
+  onSelectUser(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    this.selectedUserId = Number(target.value);
     this.generateChartData(this.selectedUserId);
   }
 

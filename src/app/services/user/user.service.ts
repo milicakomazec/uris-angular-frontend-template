@@ -1,27 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { IResponse } from '../task/task.service';
-
-export interface GetUserResponse {
-  status: number;
-  message: number;
-  result: IUser[];
-}
-
-export interface IUser {
-  userId: number;
-  email: string;
-  fullName: string;
-  phone: string;
-  mobile: string;
-  websiteUrl: string;
-  gitHubUrl: string;
-  linkedinUrl: string;
-  address: string;
-}
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { GetUserResponse, IResponse, IUser } from '../../shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +13,7 @@ export class UserService {
   private allUsersSubject: BehaviorSubject<IUser[]> = new BehaviorSubject<
     IUser[]
   >([]);
+
   public allUsers$: Observable<IUser[]> = this.allUsersSubject.asObservable();
 
   constructor(private http: HttpClient) {

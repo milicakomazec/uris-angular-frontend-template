@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  ITask,
   TaskPriority,
   TaskService,
   TaskStatus,
@@ -9,7 +8,8 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IUser, UserService } from '../services/user/user.service';
+import { UserService } from '../services/user/user.service';
+import { ITask, IUser } from '../shared/interfaces';
 
 @Component({
   selector: 'app-edit-task',
@@ -44,38 +44,42 @@ export class EditTaskComponent implements OnInit {
   }
 
   getTaskById(): void {
-    this.taskService.getTaskById(this.taskId).subscribe(
-      response => {
+    this.taskService.getTaskById(this.taskId).subscribe({
+      next: response => {
         if (response) {
           this.task = response;
           this.isLoading = false;
-          console.log('Fetched data');
-        } else {
-          console.error('Failed to fetch task');
         }
       },
-      error => {
+      error: error => {
         console.error('Error fetching task:', error);
-      }
-    );
+      },
+    });
   }
 
   onSubmit(): void {
-    this.taskService.editTask(this.taskId, this.task).subscribe(
-      response => {
+    this.taskService.editTask(this.taskId, this.task).subscribe({
+      next: response => {
         console.log('Task updated successfully:', response);
         this.task = response;
       },
-      error => {
+      error: error => {
         console.error('Error updating task:', error);
-      }
-    );
-    this.router.navigate(['/backlog'], {
-      queryParams: { page: 1 },
+      },
+      complete: () => {
+        this.router.navigate(['/backlog'], {
+          queryParams: { page: 1 },
+        });
+      },
     });
   }
 
   onReset(): void {
     this.getTaskById();
+  }
+  onCancel(): void {
+    this.router.navigate(['/backlog'], {
+      queryParams: { page: 1 },
+    });
   }
 }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
@@ -21,12 +20,12 @@ interface LoginResponse {
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  getToken(): string | null {
+  getUserId(): string | null {
     return localStorage.getItem('userId');
   }
 
   isLoggedIn(): boolean {
-    return this.getToken() !== null;
+    return this.getUserId() !== null;
   }
 
   logout() {

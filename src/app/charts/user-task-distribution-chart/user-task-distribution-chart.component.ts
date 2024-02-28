@@ -2,6 +2,11 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 
+interface ChartData {
+  title: string;
+  labels: string[];
+  data: number[];
+}
 @Component({
   selector: 'app-user-task-distribution-chart',
   standalone: true,
@@ -10,7 +15,18 @@ import { Chart, registerables } from 'chart.js';
   styleUrl: '../chart-styles.scss',
 })
 export class UserTaskDistributionChartComponent {
-  @Input() chartData: any = [];
+  @Input() chartData: ChartData[] = [
+    {
+      title: 'Status',
+      labels: [],
+      data: [],
+    },
+    {
+      title: 'Type',
+      labels: [],
+      data: [],
+    },
+  ];
 
   public statusPerUserChart!: Chart;
   public typePerUserChart!: Chart;

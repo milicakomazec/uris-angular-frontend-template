@@ -47,7 +47,7 @@ export class TaskTypeChartComponent {
           },
         },
         legend: {
-          position: 'right',
+          position: 'left',
         },
       },
     };

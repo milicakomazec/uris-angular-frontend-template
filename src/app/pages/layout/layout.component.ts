@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth/auth-service';
 
@@ -24,7 +24,6 @@ export class LayoutComponent {
 
   closeMenu(path: string) {
     this.router.navigate([path]);
-    // this.toggleSideNav = true;
   }
 
   onLogout(): void {

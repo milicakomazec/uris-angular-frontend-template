@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container shadow" *ngIf="task">
   <form (ngSubmit)="onSubmit()">
     <div class="row">
       <h4>Edit task</h4>
@@ -54,6 +54,7 @@
       <div class="col">
         <button type="submit">Submit</button>
         <button type="button" (click)="onReset()">Reset</button>
+        <button type="button" (click)="onCancel()">Cancel</button>
       </div>
     </div>
   </form>

@@ -1,4 +1,4 @@
-<div class="board">
+<div class="board shadow" [ngClass]="{ blurred: isFormModalVisible }">
   <div class="board-wrapper">
     <div class="board-columns" cdkDropListGroup>
       <div
@@ -18,19 +18,81 @@
               <p class="card-text">
                 {{ task.description }}
               </p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">{{ task.type }}</li>
-              <li class="list-group-item">{{ task.assignedUserId }}</li>
-              <li class="list-group-item">{{ task.loggedTime }}</li>
-            </ul>
-            <div class="card-body">
-              <a href="#" class="card-link">{{ task.priority }}</a>
-              <a href="#" class="card-link">{{ task.status }}</a>
+
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <span>Type:</span><span>{{ task.type }}</span>
+                </li>
+                <li class="list-group-item">
+                  <span>Status:</span><span>{{ task.status }}</span>
+                </li>
+                <li class="list-group-item">
+                  <span>Priority:</span><span>{{ task.priority }}</span>
+                </li>
+              </ul>
+
+              <button (click)="openEditModal(task)">Edit</button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div class="edit-modal" *ngIf="selectedTask && isFormModalVisible">
+  <div class="container">
+    <form (ngSubmit)="onSubmit()">
+      <div class="row">
+        <h4>Edit task</h4>
+        <div class="input-group">
+          <div class="label">Title</div>
+          <input
+            type="text"
+            [(ngModel)]="selectedTask.title"
+            name="title"
+            required />
+        </div>
+        <div class="input-group">
+          <div class="label">Description</div>
+          <input
+            type="text"
+            [(ngModel)]="selectedTask.description"
+            name="description"
+            required />
+        </div>
+        <div class="input-group">
+          <div class="label">Status</div>
+          <select [(ngModel)]="selectedTask.status" name="status" required>
+            <option *ngFor="let status of taskStatus" [value]="status">
+              {{ status }}
+            </option>
+          </select>
+        </div>
+        <div class="input-group">
+          <div class="label">Type</div>
+          <select [(ngModel)]="selectedTask.type" name="type" required>
+            <option *ngFor="let type of taskType" [value]="type">
+              {{ type }}
+            </option>
+          </select>
+        </div>
+        <div class="input-group">
+          <div class="label">Priority</div>
+          <select [(ngModel)]="selectedTask.priority" name="priority" required>
+            <option *ngFor="let priority of taskPriority" [value]="priority">
+              {{ priority }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button type="submit">Submit</button>
+          <button class="btn btn-secondary" (click)="closeEditModal()">
+            Close
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

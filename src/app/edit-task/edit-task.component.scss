@@ -3,23 +3,79 @@
 h4 {
   color: $action-color;
 }
+.container {
+  margin-top: 20px;
 
-input,
-select option,
-select {
-  width: 100%;
-  padding: 1em;
-  line-height: 1.4;
-  background-color: #f9f9f9;
-  border: 1px solid #e5e5e5;
-  border-radius: 3px;
-  -webkit-transition: 0.35s ease-in-out;
-  -moz-transition: 0.35s ease-in-out;
-  -o-transition: 0.35s ease-in-out;
-  transition: 0.35s ease-in-out;
-  transition: all 0.35s ease-in-out;
-}
-input:focus {
-  outline: 0;
-  border-color: $action-color;
+  form {
+    h4 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: $text-color-primary;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+
+      .label {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        display: block;
+        color: $text-color-primary;
+      }
+
+      input[type='text'],
+      select {
+        width: calc(100% - 1.5rem);
+        padding: 1.5rem;
+        font-size: 1rem;
+        border-radius: 0.25rem;
+        border: 1px solid $text-color-secondary;
+        transition:
+          border-color 0.15s ease-in-out,
+          box-shadow 0.15s ease-in-out;
+        color: $text-color-dark;
+        background-color: $text-color-primary;
+        margin-bottom: 1rem;
+
+        &:focus {
+          border-color: $text-color-dark;
+          box-shadow: 0 0 0 0.2rem rgba(132, 169, 140, 0.25);
+          background-color: $action-color;
+        }
+      }
+    }
+
+    .col {
+      button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        border-radius: 0.25rem;
+        transition: all 0.3s ease-in-out;
+        margin-right: 20px;
+
+        &:first-child {
+          background-color: $action-color;
+          border-color: $action-color;
+          color: #fff;
+          margin-left: 500px;
+
+          &:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+          }
+        }
+
+        &:not(:first-child) {
+          background-color: $background-color-medium;
+          border-color: $background-color-medium;
+          color: #fff;
+
+          &:hover {
+            background-color: $background-color-light;
+            border-color: $background-color-light;
+          }
+        }
+      }
+    }
+  }
 }

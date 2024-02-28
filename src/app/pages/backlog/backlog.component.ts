@@ -1,5 +1,5 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   ITask,
@@ -9,8 +9,9 @@ import {
   TaskType,
 } from '../../services/task/task.service';
 
-import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { IUser } from '../../shared/interfaces';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-backlog',
@@ -22,7 +23,7 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class BacklogComponent implements OnInit {
   taskForm!: FormGroup;
-  task: ITask[] = [];
+  tasks: ITask[] = [];
   filteredTasks: ITask[] = [];
   taskStatus = TaskStatus;
   taskType = TaskType;
@@ -38,36 +39,36 @@ export class BacklogComponent implements OnInit {
   prioritySortOrder: 'asc' | 'desc' = 'asc';
   taskToDeleteId: number | null = null;
   isModalVisible: boolean = false;
+  newTask: ITask = {} as ITask;
+  isFormModalVisible: boolean = false;
+  allUsers: IUser[] = [];
 
   constructor(
     private taskService: TaskService,
+    private userService: UserService,
 
-    // private fb: FormBuilder,
     private router: Router
-  ) {
-    // this.taskForm = this.fb.group({
-    //   title: new FormControl('', [Validators.required]),
-    //   description: new FormControl('', [Validators.required]),
-    //   status: new FormControl('OPEN', [Validators.required]),
-    // });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getAllTasks();
+    this.userService.allUsers$.subscribe(users => {
+      this.allUsers = users;
+    });
   }
 
   getAllTasks() {
     this.taskService.getAllTasks().subscribe({
       next: (response: { result: ITask[] }) => {
-        this.task = response.result.filter(task => task.status === 'new');
-        this.totalPages = Math.ceil(this.task.length / this.tasksPerPage);
+        this.tasks = response.result.filter(task => task.status === 'new');
+        this.totalPages = Math.ceil(this.tasks.length / this.tasksPerPage);
         this.applyFilters();
       },
     });
   }
 
   applyFilters() {
-    this.filteredTasks = this.task.filter(task => {
+    this.filteredTasks = this.tasks.filter(task => {
       const typeFilter =
         !this.selectedType ||
         this.selectedType === 'all' ||
@@ -215,5 +216,32 @@ export class BacklogComponent implements OnInit {
 
   editTask(taskId: number) {
     this.router.navigate(['/task/', taskId]);
+  }
+
+  onSubmit(): void {
+    this.taskService.addTask(this.newTask).subscribe({
+      next: response => {
+        console.log('Task created successfully:', response);
+        this.tasks.unshift(response);
+        this.filteredTasks = [...this.tasks];
+        this.closeForm();
+      },
+      error: error => {
+        console.error('Error creating task:', error);
+      },
+    });
+  }
+
+  onReset(): void {
+    this.newTask = {} as ITask;
+  }
+
+  openForm(): void {
+    this.isFormModalVisible = true;
+  }
+
+  closeForm(): void {
+    this.isFormModalVisible = false;
+    this.onReset();
   }
 }

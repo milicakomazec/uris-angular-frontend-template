@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { LayoutComponent } from './pages/layout/layout.component';
-import { LoginComponent } from './pages/login/login.component';
 import { routes } from './app.routes';
-import { CommonModule } from '@angular/common';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,8 +13,6 @@ import { CommonModule } from '@angular/common';
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    LayoutComponent,
-    LoginComponent,
     CommonModule,
   ],
   // providers: [

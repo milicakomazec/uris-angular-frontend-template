@@ -93,5 +93,35 @@
         </div>
       </div>
     </div>
+
+    <div>
+      <table class="table">
+        <thead class="table-header">
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of userTasks; let i = index">
+            <th>
+              <span>{{ task.title }}</span>
+            </th>
+            <td class="left-aligned">{{ task.description }}</td>
+            <td>
+              <span>{{ task.type }}</span>
+            </td>
+            <td>{{ task.status }}</td>
+
+            <td>
+              <span>{{ task.priority }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

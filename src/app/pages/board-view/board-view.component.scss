@@ -1,95 +1,180 @@
+@import '../../../assets/scss/variables';
+
 .board {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  min-width: 0;
-  min-height: 0;
-
-  .board-bar {
-    background: rgba(gray, 0.5);
-    padding: 8px 15px;
-
-    .board-name {
-      font-size: 20px;
-      font-weight: bold;
-      color: white;
-    }
-  }
-
   .board-wrapper {
-    display: flex;
-    flex-grow: 1;
-    overflow-x: auto;
-
     .board-columns {
       display: flex;
-      flex-grow: 1;
-
-      .board-column {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        flex-basis: 0;
-        min-width: 300px;
-        margin: 50px;
-        padding: 25px;
-
-        border-radius: 4px;
-
-        background: rgba(white, 0.5);
-
-        &:not(:first-child) {
-          margin-left: 0;
-        }
-
-        .column-title {
-          font-size: 20px;
-          font-weight: 800;
-          font-family: 'Lato', sans-serif;
-          text-transform: uppercase;
+      gap: 20px;
+    }
+    .board-column {
+      flex: 1;
+      background-color: #1d2b30;
+      padding: 20px;
+      border-radius: 8px;
+      .column-title {
+        color: $text-color-primary;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .task {
+        margin-bottom: 10px;
+        .card {
+          margin-left: 35px;
           margin-bottom: 20px;
+          width: 100%;
+          background-color: #d4dddb;
+          border: none;
+          border-radius: 8px;
+          .card-body {
+            padding: 20px;
+            h5.card-title {
+              color: $text-color-secondary;
+              margin-bottom: 10px;
+            }
+            p.card-text {
+              color: $text-color-dark;
+              margin-bottom: 15px;
+            }
+            ul.list-group {
+              margin-bottom: 15px;
+
+              .list-group-item {
+                display: flex;
+                justify-content: space-between;
+                background-color: $action-color;
+                border-radius: 2px;
+                margin-top: 2px;
+                border: none;
+                span {
+                  color: $text-color-dark;
+                }
+              }
+            }
+            button {
+              background-color: $action-color;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              padding: 8px 16px;
+              cursor: pointer;
+              transition: background-color 0.3s;
+              &:hover {
+                background-color: darken($action-color, 10%);
+              }
+            }
+          }
         }
       }
     }
   }
 }
 
-.tasks-container {
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-.task {
+.edit-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  z-index: 100;
   display: flex;
-  padding: 15px 12px;
-  background: white;
-  border-bottom: solid 1px #ddd;
-  border-radius: 4px;
-
-  margin-bottom: 15px;
-
-  box-shadow:
-    0 5px 5px -3px rgba(0, 0, 0, 0.05),
-    0 3px 14px 2px rgba(0, 0, 0, 0.05);
+  align-items: center;
+  justify-content: center;
+  .container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    form {
+      .row {
+        margin-bottom: 20px;
+        .input-group {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 10px;
+          .label {
+            color: $text-color-primary;
+            margin-bottom: 5px;
+          }
+          input,
+          select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            &:focus {
+              outline: none;
+              border-color: $action-color;
+            }
+          }
+        }
+      }
+      button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        &:first-child {
+          background-color: $action-color;
+          color: white;
+          margin-right: 10px;
+          &:hover {
+            background-color: darken($action-color, 10%);
+          }
+        }
+        &.btn-secondary {
+          background-color: $background-color-light;
+          color: $text-color-primary;
+          &:hover {
+            background-color: darken($background-color-light, 10%);
+          }
+        }
+      }
+    }
+  }
 }
 
-.cdk-drag-preview {
-  box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow:
-    0 5px 5px -3px rgba(0, 0, 0, 0.2),
-    0 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+.task.cdk-drag-preview {
+  transition:
+    transform 30ms ease-in-out,
+    box-shadow 30ms ease-in-out;
+  transform-origin: center;
+  .card {
+    background-color: #667a76;
+    border: none;
+    border-radius: 8px;
+    .list-group-item {
+      display: flex;
+      justify-content: space-between;
+      background-color: $action-color;
+      border-radius: 2px;
+      margin-top: 2px;
+      border: none;
+      span {
+        color: $text-color-dark;
+      }
+    }
+  }
+  button {
+    margin-top: 5px;
+    background-color: $text-color-primary;
+    color: #1d2b30;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    &:hover {
+      background-color: darken($action-color, 10%);
+    }
+  }
 }
 
-.cdk-drag-placeholder {
-  opacity: 0;
+.task.cdk-drag-animating {
+  transition: transform 30ms ease-in-out;
 }
 
-.cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.tasks-container.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+.task.cdk-drag-dropped {
+  transition: transform 30ms ease-in-out;
 }

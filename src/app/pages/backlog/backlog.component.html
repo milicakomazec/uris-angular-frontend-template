@@ -1,8 +1,8 @@
-<div class="container shadow">
+<div class="container shadow" [ngClass]="{ blurred: isFormModalVisible }">
   <div class="header-container">
     <div>
       <h3>Backlog</h3>
-      <button class="backlog-btn">NEW TASK</button>
+      <button class="backlog-btn" (click)="openForm()">NEW TASK</button>
     </div>
 
     <div class="filter-container">
@@ -136,5 +136,72 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div *ngIf="isFormModalVisible" class="edit-modal">
+  <div class="container">
+    <form (ngSubmit)="onSubmit()" #taskForm="ngForm">
+      <div class="row">
+        <h4>Create task</h4>
+        <div class="input-group">
+          <div class="label">Title</div>
+          <input
+            type="text"
+            [(ngModel)]="newTask.title"
+            name="title"
+            required />
+        </div>
+        <div class="input-group">
+          <div class="label">Description</div>
+          <input
+            type="text"
+            [(ngModel)]="newTask.description"
+            name="description"
+            required />
+        </div>
+        <div class="input-group">
+          <div class="label">Status</div>
+          <select [(ngModel)]="newTask.status" name="status" required>
+            <option *ngFor="let status of taskStatus" [value]="status">
+              {{ status }}
+            </option>
+          </select>
+        </div>
+        <div class="input-group">
+          <div class="label">Type</div>
+          <select [(ngModel)]="newTask.type" name="type" required>
+            <option *ngFor="let type of taskType" [value]="type">
+              {{ type }}
+            </option>
+          </select>
+        </div>
+        <div class="input-group">
+          <div class="label">Priority</div>
+          <select [(ngModel)]="newTask.priority" name="priority" required>
+            <option *ngFor="let priority of taskPriority" [value]="priority">
+              {{ priority }}
+            </option>
+          </select>
+        </div>
+        <div class="input-group">
+          <div class="label">Assigned user</div>
+          <select
+            [(ngModel)]="newTask.assignedUserId"
+            name="assignedUserId"
+            required>
+            <option *ngFor="let user of allUsers" [value]="user.userId">
+              {{ user.fullName }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button type="submit">Create</button>
+          <button type="button" (click)="onReset()">Reset</button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
